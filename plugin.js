@@ -6,9 +6,6 @@
     CKEDITOR.plugins.add('xss', {
         modes: { 'wysiwyg': 1 },
 
-        /**
-         * @this {Editor}
-         */
         afterInit: function(editor) {
             var rules = {
                 'attributes': {
