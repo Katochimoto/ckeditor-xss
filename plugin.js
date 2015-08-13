@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var REG_JAVASCRIPT_HREF = /^\s*javascript:|vbscript:/i;
+    var REG_JAVASCRIPT_HREF = /^\s*javascript:|vbscript:|data:/i;
 
     CKEDITOR.plugins.add('xss', {
         modes: { 'wysiwyg': 1 },
