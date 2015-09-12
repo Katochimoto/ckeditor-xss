@@ -3,6 +3,7 @@
 
     var REG_JAVASCRIPT_HREF = /^\s*javascript:|vbscript:|data:/i;
     var REG_REPLACE_ASCII = /[\x00-\x31\x127]/g;
+    var REG_URI_DECODE = /(%(?:D0|D1)%.{2})/g;
 
     CKEDITOR.plugins.add('xss', {
         modes: { 'wysiwyg': 1 },
@@ -28,30 +29,19 @@
     });
 
     function decode(value) {
-        var out = '';
-
         try {
-            out = decodeURIComponent(value);
-
+            return decodeURIComponent(value);
         } catch (e) {
-            var arr = value.split(/(%(?:D0|D1)%.{2})/);
-            var i = 0;
-            var l = arr.length;
-            var x;
-
-            for (; i < l; i++) {
-                try {
-                    x = decodeURIComponent(arr[ i ]);
-
-                } catch (e) {
-                    x = arr[ i ];
-                }
-
-                out += x;
-            }
+            return value.replace(REG_URI_DECODE, decodePart);
         }
-
-        return out
     }
-    
+
+    function decodePart(part) {
+        try {
+            return decodeURIComponent(part);
+        } catch (e) {
+            return part;
+        }
+    }
+
 }());
